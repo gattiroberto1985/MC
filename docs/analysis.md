@@ -98,10 +98,12 @@ specifici) e la lista di operazioni in ingresso ed in uscita su questo conto.
 
 Costituita da quattro pagine jsp:
 
-- `login`   : con url definito dalla root;
-- `homepage`: con url a `users/:id_user/homepage`;
-- `account` : con url a `users/:id_user/accounts/:id_account`;
-- `admin`   : con url a `users/:id_user/admin`;
+- `login`    : con url definito dalla root;
+- `homepage` : con url a `users/:id_user/homepage`;
+- `portfolio`: con url a `users/:id_user/portfolio/:id_ptf`;
+- `account`  : con url a `users/:id_user/portfolio/:id_ptf/accounts/:id_acn`;
+- `mvmnts`   : con url a `users/:id_user/portfolio/:id_ptf/accounts/:id_acn/movmnts`;
+- `admin`    : con url a `users/:id_user/admin`;
 
 ## Servizi REST
 
@@ -177,14 +179,86 @@ Saranno da definire:
 
 - `Transaction`, relativo alle operazioni eseguite. Url di riferimento è
   `/rest/transactions`, e da qui verranno gestite le varie operazioni sulle
-  transazioni. I
+  transazioni.
 
 
-Problema: 
+Esisterà una sequenza di invocazione, ad esempio per l'ingresso in home page:
+
+1. login utente: se ko, ritorno a pagina login con messaggio errore;
+2. recupero dati utente (chiamata a `/rest/users/:user_id`), che ritorna JSON
+   con oggetto utente (rest);
+3. recupero dei portafoglio (chiamata a `/rest/portfolios?user_id=:user_id`),
+   che ritorna JSON con oggetto portfolio (rest);
+4. recupero dei conti relativi ai portafoglio. Per ogni `ptf_id`, verrà invocato
+   `/rest/accounts?ptf_id=:ptf_id`, e in output JSON con lista account;
+5. per ogni account, verranno recuperate le ultime `N` operazioni, con chiamata
+   `/rest/transactions?acn_id=:acn_id&max_num=N`
+
+I dati così recuperati verranno aggregati nell'oggetto di business `UserBean`
+che conterrà tutti i dati del caso.
+
+<!--
+    TODO: Da valutare l'inserimento di "alias" per i REST, del tipo:
+
+    /rest/users/:user_id/portfolios -> /rest/portfolios?&user_id=:user_id
+    /rest/users/:user_id/portfolios/:id_ptf/accounts/:acn_id  ->
+            /rest/accounts?&acn_id=:acn_id
+
+    questo per definire una sorta di "scope" dei vari bean a runtime.
+-->
+
+# Bean applicativi
+
+## Oggetto utente `UserBean`
+
+Lo `UserBean` sarà costituito da un id, un nome utente e una serie di
+portafoglio. Avrà inoltre associati a sè una serie di tag, con cui potrà
+etichettare i vari oggetti che dovrà gestire. Inoltre, ad ogni utente sarà
+associato un insieme personalizzabile di operazioni predefinite, modificabile
+a piacere (spese frequenti, ricorrenti).
+
+## Oggetto portafoglio `PortfolioBean`
+
+Ogni utente potrà avere associati diversi portafoglio (mappatura `1:N`), che
+a loro volta, avranno una mappatura `N:M` con i conti (esistendo dei conti
+condivisi). Ogni portafoglio porterà con sè le informazioni relative allo stato
+generale (saldo totale di tutti i conti relazionati al portafoglio).
+
+## Oggetto conto `AccountBean`
+
+Ogni conto potrà essere associato ad uno o più portafoglio (che a loro volta
+potranno appartenere ad uno o più utenti) e sarà definito, oltre che dal solito
+id numerico, da una serie di attributi:
+
+- tipologia del conto (corrente, di risparmio, generico);
+- descrizione del conto;
+
+
+## Oggetto transazione `TransactionBean`
+
+Rappresenta una transazione tra due conti, e può essere di tre tipologie
+predefinite:
+
+- Incasso (saldo netto positivo);
+- Spesa (saldo netto negativo);
+- Trasferimento (saldo netto nullo).
+
+In generale ogni transazione avrà come attributi (oltre all'immancabile id
+numerico):
+
+- tipologia;
+- importo;
+- data;
+- descrizione;
+- conto origine (obbligatorio se operazione di spesa o di trasferimento);
+- conto destinazione (obbligatorio se operazione di incasso o di trasferimento).
+
+
+<br/>
+
 
 # Applicazione Web -- Navigazione
 
-L'applicazione
 
 # Servizi Rest per accesso extra applicazione Web
 

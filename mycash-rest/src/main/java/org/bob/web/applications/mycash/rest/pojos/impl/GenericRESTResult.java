@@ -32,6 +32,53 @@ public class GenericRESTResult implements RestObjectBean {
         this.setMessage(message);
         this.setData(data);
     }
+
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public final void setCode(int code) {
+        this.code = code;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public final void setMessage(String message) {
+        this.message = message;
+    }
+
+    /**
+     * @return the data
+     */
+    public Object getData() {
+        return data;
+    }
+
+    /**
+     * @param data the data to set
+     */
+    public final void setData(Object data) {
+        this.data = data;
+    }
+
+    @Override
+    public String toJson() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

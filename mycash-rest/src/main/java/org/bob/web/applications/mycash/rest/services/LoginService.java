@@ -1,4 +1,4 @@
-package org.bob.web.applications.mycash.rest.resources;
+package org.bob.web.applications.mycash.rest.services;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,11 +9,13 @@ import javax.ws.rs.Produces;
  * @author roberto.gatti
  */
 @Path("login")
-public class LoginResource {
+public class LoginService {
 
-    @GET
-    @Produces("text/plain")
-    public String get() {
-        return "page";
-}
+    @POST
+    @Produces("application/json")
+    public String login(String body)
+    {
+        
+    }
+    
 }
