@@ -256,6 +256,27 @@ numerico):
 
 <br/>
 
+Per ogni oggetto di questo tipo, definiti nel package
+`org.bob.web.applications.mycash.engine.pojos`, sarà definita una `interface`
+dedicata allo strato di persistenza. Ad esempio, per l'utente sarà creata
+l'interfaccia java `UserBeanDAO`, in un package dedicato, denominato `daos` e
+alllo stesso livello di `pojos`. Al suo interno dovrà essere definito un package
+ulteriore, `impl`, che conterrà, separato in gerarchia, le varie implementazioni
+dei DAO.
+Nell'interfaccia andranno definiti i classici metodi `CRUD` piu' altri metodi
+di utilità varia e specifici di quel tipo di oggetto.
+I pojo dovranno avere le annotations java relative al layer di persistenza.
+
+<!-- Da valutare la fattibilità della seguente cosa:
+
+   - Oggetto con soli attributi, get e set di base;
+   - interfaccia BO per l'utilizzo come business object;
+   - interfaccia RO per l'utilizzo come oggetto da gestire nei REST;
+   - interfaccia DO per l'utilizzo come oggetto DAO.
+
+  Esisteranno poi le implementazioni delle tre interfacce (per ogni bean
+  applicativo)
+-->
 
 # Applicazione Web -- Navigazione
 

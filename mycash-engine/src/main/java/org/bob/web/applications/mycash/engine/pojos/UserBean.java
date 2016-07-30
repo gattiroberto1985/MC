@@ -16,41 +16,34 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table( name = "users" )
-@XmlRootElement( name = "user" )
-@XmlAccessorType( XmlAccessType.FIELD )
-public class MCUser {
+public class UserBean {
 
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
     @Column( name = "id" )
-    @XmlElement( required = true )
     private long id;
     
     @Column( name = "username" )
-    @XmlElement( required = true )
     private String username;
     
     @Column( name = "password" )
-    @XmlElement( required = true )
     private String password;
     
     @Column( name  ="salt" )
-    @XmlElement( required = true )
     private String salt;
     
     @Column( name = "email" )
-    @XmlElement( required = true )
     private String email;
     
     
-    public MCUser(String username, String password)
+    public UserBean(String username, String password)
     {
         this.setUsername(username);
         this.setPassword(password);
     }
     
-    public MCUser(String username, String password, String email)
+    public UserBean(String username, String password, String email)
     {
         this.setUsername(username);
         this.setPassword(password);
