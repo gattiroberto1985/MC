@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31-lug-2016 16.50.26 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.bob.web.applications.mycash.engine.hc.dao.Portfolios" table="portfolios" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="users" class="org.bob.web.applications.mycash.engine.hc.dao.Users" fetch="select">
+            <column name="user_id" />
+        </many-to-one>
+        <property name="name" type="serializable">
+            <column name="name" not-null="true" />
+        </property>
+        <property name="amount" type="double">
+            <column name="amount" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="tmstIns" type="timestamp">
+            <column name="tmst_ins" length="29" not-null="true" />
+        </property>
+        <property name="tmstUpd" type="timestamp">
+            <column name="tmst_upd" length="29" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

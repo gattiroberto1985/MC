@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31-lug-2016 16.50.26 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.bob.web.applications.mycash.engine.hc.dao.Users" table="users" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="username" type="serializable">
+            <column name="username" />
+        </property>
+        <property name="salt" type="serializable">
+            <column name="salt" />
+        </property>
+        <property name="password" type="serializable">
+            <column name="password" />
+        </property>
+        <property name="tmstIns" type="timestamp">
+            <column name="tmst_ins" length="29" not-null="true" />
+        </property>
+        <property name="tmstUpd" type="timestamp">
+            <column name="tmst_upd" length="29" not-null="true" />
+        </property>
+        <set name="portfolioses" table="portfolios" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" />
+            </key>
+            <one-to-many class="org.bob.web.applications.mycash.engine.hc.dao.Portfolios" />
+        </set>
+    </class>
+</hibernate-mapping>

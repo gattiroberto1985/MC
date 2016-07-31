@@ -104,6 +104,7 @@ Costituita da quattro pagine jsp:
 - `account`  : con url a `users/:id_user/portfolio/:id_ptf/accounts/:id_acn`;
 - `mvmnts`   : con url a `users/:id_user/portfolio/:id_ptf/accounts/:id_acn/movmnts`;
 - `admin`    : con url a `users/:id_user/admin`;
+- `error`    : con url a `error`.
 
 ## Servizi REST
 
@@ -197,6 +198,26 @@ Esisterà una sequenza di invocazione, ad esempio per l'ingresso in home page:
 I dati così recuperati verranno aggregati nell'oggetto di business `UserBean`
 che conterrà tutti i dati del caso.
 
+## Architettura classi
+
+Per ogni servizio sarà presente una classe che dovrà estendere una classe di
+facciata `AbstractFacade<T>` che esporrà i metodi generici di gestione dei vari
+oggetti, nello specifico:
+
+- `count()`;
+- `create(T entity)`;
+- `edit(T entity)`;
+- `find(T entity)`;
+- `findAll()`;
+- `findRange(int[] range)`;
+- `remove(T entity)`;
+
+la classe poi conterra' un riferimento all'entitymanager di turno, con relativo
+getter, ed un costruttore ad un parametro di tipo `Class<T>`.
+
+Le classi relative a questi servizi implementeranno questa superclasse ed
+eventualmente integreranno metodi aggiuntivi di utilità specifica.
+
 <!--
     TODO: Da valutare l'inserimento di "alias" per i REST, del tipo:
 
@@ -267,16 +288,7 @@ Nell'interfaccia andranno definiti i classici metodi `CRUD` piu' altri metodi
 di utilità varia e specifici di quel tipo di oggetto.
 I pojo dovranno avere le annotations java relative al layer di persistenza.
 
-<!-- Da valutare la fattibilità della seguente cosa:
 
-   - Oggetto con soli attributi, get e set di base;
-   - interfaccia BO per l'utilizzo come business object;
-   - interfaccia RO per l'utilizzo come oggetto da gestire nei REST;
-   - interfaccia DO per l'utilizzo come oggetto DAO.
-
-  Esisteranno poi le implementazioni delle tre interfacce (per ogni bean
-  applicativo)
--->
 
 # Applicazione Web -- Navigazione
 

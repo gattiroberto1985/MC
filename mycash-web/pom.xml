@@ -26,6 +26,17 @@
             <version>4.2.5.RELEASE</version>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>2.5.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
@@ -35,12 +46,18 @@
             <groupId>org.bob.web.applications</groupId>
             <artifactId>mycash-rest</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bob.web.applications</groupId>
+                    <artifactId>mycash-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.bob.web.applications</groupId>
             <artifactId>mycash-engine</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
+        </dependency-->
     </dependencies>
 
     <build>
